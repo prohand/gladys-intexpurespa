@@ -6,6 +6,8 @@ All notable changes to this integration are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.0.1] - 2026-10-30
+
 ### Added
 
 - Local control of Intex PureSpa Wi-Fi spas (TCP 8990, no Intex account, no cloud): power,
@@ -24,4 +26,5 @@ All notable changes to this integration are documented here. The format follows
 - CI (Prettier, ESLint, tests on Node 22 and 24, store checks, Docker build), multi-arch image
   build, UI-driven Release workflow and GitHub releases.
 
-[Unreleased]: https://github.com/prohand/gladys-intexpurespa/commits/main
+[Unreleased]: https://github.com/prohand/gladys-intexpurespa/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/prohand/gladys-intexpurespa/releases/tag/v0.0.1
