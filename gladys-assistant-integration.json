@@ -1,0 +1,457 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "Intex PureSpa",
+  "description": {
+    "en": "Control your Intex PureSpa over Wi-Fi: heating, bubbles, filtration and water temperature.",
+    "fr": "Pilotez votre spa Intex PureSpa en Wi-Fi : chauffage, bulles, filtration et température.",
+    "de": "Steuere dein Intex PureSpa per WLAN: Heizung, Sprudel, Filterung und Wassertemperatur.",
+    "es": "Controle su spa Intex PureSpa por Wi-Fi: calefacción, burbujas, filtración y temperatura."
+  },
+  "version": "0.0.0",
+  "docker_image": "ghcr.io/prohand/gladys-intexpurespa:0.0.0",
+  "gladys_version": ">=5.3.0",
+  "cover_image": "https://raw.githubusercontent.com/prohand/gladys-intexpurespa/main/cover.png",
+  "categories": ["leisure", "appliances"],
+  "keywords": [
+    "intex",
+    "purespa",
+    "pure spa",
+    "jacuzzi",
+    "hot tub",
+    "whirlpool",
+    "spa gonflable",
+    "inflatable spa",
+    "bubble spa",
+    "jet spa"
+  ],
+  "transports": ["local"],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Getting started",
+        "fr": "Pour commencer",
+        "de": "Erste Schritte",
+        "es": "Primeros pasos"
+      },
+      "description": {
+        "en": "The integration talks to the Wi-Fi module of the spa directly on your network (TCP port 8990): no Intex account, no cloud. First connect the spa to your Wi-Fi with the Intex app, then give it a fixed IP address in your router (DHCP reservation) and type that address below.",
+        "fr": "L'intégration dialogue directement avec le module Wi-Fi du spa sur votre réseau (port TCP 8990) : pas de compte Intex, pas de cloud. Connectez d'abord le spa à votre Wi-Fi avec l'application Intex, puis donnez-lui une adresse IP fixe dans votre box (réservation DHCP) et saisissez cette adresse ci-dessous.",
+        "de": "Die Integration spricht direkt in deinem Netzwerk mit dem WLAN-Modul des Spas (TCP-Port 8990): kein Intex-Konto, keine Cloud. Verbinde das Spa zuerst mit der Intex-App mit deinem WLAN, gib ihm dann im Router eine feste IP-Adresse (DHCP-Reservierung) und trage diese Adresse unten ein.",
+        "es": "La integración se comunica directamente con el módulo Wi-Fi del spa en su red (puerto TCP 8990): sin cuenta Intex, sin nube. Primero conecte el spa a su Wi-Fi con la app de Intex, luego asígnele una IP fija en su router (reserva DHCP) e introduzca esa dirección abajo."
+      },
+      "links": [
+        {
+          "url": "https://github.com/prohand/gladys-intexpurespa/blob/main/docs/en.md",
+          "label": {
+            "en": "Integration documentation",
+            "fr": "Documentation de l'intégration",
+            "de": "Dokumentation der Integration",
+            "es": "Documentación de la integración"
+          }
+        }
+      ]
+    },
+    {
+      "key": "host",
+      "type": "string",
+      "label": {
+        "en": "Spa address",
+        "fr": "Adresse du spa",
+        "de": "Adresse des Spas",
+        "es": "Dirección del spa"
+      },
+      "description": {
+        "en": "IP address (or host name) of the spa's Wi-Fi module on your network.",
+        "fr": "Adresse IP (ou nom d'hôte) du module Wi-Fi du spa sur votre réseau.",
+        "de": "IP-Adresse (oder Hostname) des WLAN-Moduls des Spas in deinem Netzwerk.",
+        "es": "Dirección IP (o nombre de host) del módulo Wi-Fi del spa en su red."
+      },
+      "placeholder": {
+        "en": "e.g. 192.168.1.50",
+        "fr": "ex. 192.168.1.50",
+        "de": "z. B. 192.168.1.50",
+        "es": "p. ej. 192.168.1.50"
+      },
+      "required": true
+    },
+    {
+      "key": "port",
+      "type": "number",
+      "label": {
+        "en": "TCP port",
+        "fr": "Port TCP",
+        "de": "TCP-Port",
+        "es": "Puerto TCP"
+      },
+      "description": {
+        "en": "Leave 8990, the port of every Intex Wi-Fi module.",
+        "fr": "Laissez 8990, le port de tous les modules Wi-Fi Intex.",
+        "de": "8990 lassen, der Port aller Intex-WLAN-Module.",
+        "es": "Deje 8990, el puerto de todos los módulos Wi-Fi de Intex."
+      },
+      "required": false,
+      "default": 8990,
+      "min": 1,
+      "max": 65535
+    },
+    {
+      "key": "has_jets",
+      "type": "boolean",
+      "label": {
+        "en": "My spa has hydro jets",
+        "fr": "Mon spa a des jets hydromassants",
+        "de": "Mein Spa hat Massagedüsen",
+        "es": "Mi spa tiene chorros de hidromasaje"
+      },
+      "description": {
+        "en": "Hydrojet models only (PureSpa Jet & Bubble). Adds a Jets switch.",
+        "fr": "Modèles Hydrojet uniquement (PureSpa Jet & Bubble). Ajoute un interrupteur Jets.",
+        "de": "Nur Hydrojet-Modelle (PureSpa Jet & Bubble). Fügt einen Düsen-Schalter hinzu.",
+        "es": "Solo modelos Hydrojet (PureSpa Jet & Bubble). Añade un interruptor de chorros."
+      },
+      "required": false,
+      "default": false
+    },
+    {
+      "key": "has_sanitizer",
+      "type": "boolean",
+      "label": {
+        "en": "My spa has a salt sanitizer",
+        "fr": "Mon spa a un traitement au sel",
+        "de": "Mein Spa hat eine Salzdesinfektion",
+        "es": "Mi spa tiene clorador salino"
+      },
+      "description": {
+        "en": "Models with the built-in salt water system. Adds a Salt sanitizer switch.",
+        "fr": "Modèles avec électrolyseur au sel intégré. Ajoute un interrupteur Traitement au sel.",
+        "de": "Modelle mit eingebautem Salzwassersystem. Fügt einen Schalter Salzdesinfektion hinzu.",
+        "es": "Modelos con sistema de agua salada integrado. Añade un interruptor Clorador salino."
+      },
+      "required": false,
+      "default": false
+    },
+    {
+      "key": "poll_frequency",
+      "type": "number",
+      "label": {
+        "en": "Refresh interval (s)",
+        "fr": "Intervalle de rafraîchissement (s)",
+        "de": "Aktualisierungsintervall (s)",
+        "es": "Intervalo de actualización (s)"
+      },
+      "description": {
+        "en": "How often the spa is read, in seconds (30 minimum: the Wi-Fi module is slow).",
+        "fr": "Fréquence de lecture du spa, en secondes (30 minimum : le module Wi-Fi est lent).",
+        "de": "Wie oft das Spa gelesen wird, in Sekunden (mindestens 30: das WLAN-Modul ist langsam).",
+        "es": "Frecuencia de lectura del spa, en segundos (mínimo 30: el módulo Wi-Fi es lento)."
+      },
+      "required": false,
+      "default": 60,
+      "min": 30,
+      "max": 3600
+    }
+  ],
+  "actions": [
+    {
+      "key": "test_connection",
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "timeout_seconds": 60
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "error_detected",
+      "label": {
+        "en": "Spa error detected",
+        "fr": "Erreur du spa détectée",
+        "de": "Spa-Fehler erkannt",
+        "es": "Error del spa detectado"
+      },
+      "description": {
+        "en": "The control panel shows an error code (E81, E90...).",
+        "fr": "Le panneau de commande affiche un code d'erreur (E81, E90...).",
+        "de": "Das Bedienfeld zeigt einen Fehlercode an (E81, E90...).",
+        "es": "El panel de control muestra un código de error (E81, E90...)."
+      },
+      "variables": [
+        {
+          "key": "code",
+          "type": "string",
+          "label": {
+            "en": "Error code",
+            "fr": "Code d'erreur",
+            "de": "Fehlercode",
+            "es": "Código de error"
+          }
+        }
+      ]
+    },
+    {
+      "key": "temperature_reached",
+      "label": {
+        "en": "Water temperature reached",
+        "fr": "Température de l'eau atteinte",
+        "de": "Wassertemperatur erreicht",
+        "es": "Temperatura del agua alcanzada"
+      },
+      "description": {
+        "en": "The heater brought the water up to the target temperature.",
+        "fr": "Le chauffage a amené l'eau à la température de consigne.",
+        "de": "Die Heizung hat das Wasser auf die Solltemperatur gebracht.",
+        "es": "La calefacción ha llevado el agua a la temperatura objetivo."
+      },
+      "variables": [
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Water temperature",
+            "fr": "Température de l'eau",
+            "de": "Wassertemperatur",
+            "es": "Temperatura del agua"
+          }
+        },
+        {
+          "key": "target",
+          "type": "number",
+          "label": {
+            "en": "Target temperature",
+            "fr": "Température de consigne",
+            "de": "Solltemperatur",
+            "es": "Temperatura objetivo"
+          }
+        }
+      ]
+    },
+    {
+      "key": "connection_lost",
+      "label": {
+        "en": "Spa no longer answers",
+        "fr": "Le spa ne répond plus",
+        "de": "Spa antwortet nicht mehr",
+        "es": "El spa ya no responde"
+      },
+      "description": {
+        "en": "The spa answered, then stopped (power cut, Wi-Fi lost...).",
+        "fr": "Le spa répondait, puis s'est tu (coupure de courant, Wi-Fi perdu...).",
+        "de": "Das Spa hat geantwortet und dann aufgehört (Stromausfall, WLAN weg...).",
+        "es": "El spa respondía y dejó de hacerlo (corte de luz, Wi-Fi perdido...)."
+      },
+      "variables": [
+        {
+          "key": "host",
+          "type": "string",
+          "label": {
+            "en": "Spa address",
+            "fr": "Adresse du spa",
+            "de": "Adresse des Spas",
+            "es": "Dirección del spa"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "set_target_temperature",
+      "label": {
+        "en": "Heat the spa to",
+        "fr": "Chauffer le spa à",
+        "de": "Spa aufheizen auf",
+        "es": "Calentar el spa a"
+      },
+      "description": {
+        "en": "Set the target temperature and, unless unticked, switch the heater on.",
+        "fr": "Règle la consigne et, sauf si décoché, allume le chauffage.",
+        "de": "Setzt die Solltemperatur und schaltet, wenn nicht abgewählt, die Heizung ein.",
+        "es": "Fija la temperatura objetivo y, salvo si se desmarca, enciende la calefacción."
+      },
+      "timeout_seconds": 60,
+      "fields": [
+        {
+          "key": "temperature",
+          "type": "number",
+          "label": {
+            "en": "Target temperature (unit of the spa)",
+            "fr": "Consigne (unité du spa)",
+            "de": "Solltemperatur (Einheit des Spas)",
+            "es": "Temperatura objetivo (unidad del spa)"
+          },
+          "required": true,
+          "default": 38,
+          "min": 10,
+          "max": 104
+        },
+        {
+          "key": "heater",
+          "type": "boolean",
+          "label": {
+            "en": "Switch the heater on",
+            "fr": "Allumer le chauffage",
+            "de": "Heizung einschalten",
+            "es": "Encender la calefacción"
+          },
+          "required": false,
+          "default": true
+        }
+      ],
+      "outputs": [
+        {
+          "key": "water_temperature",
+          "type": "number",
+          "label": {
+            "en": "Water temperature",
+            "fr": "Température de l'eau",
+            "de": "Wassertemperatur",
+            "es": "Temperatura del agua"
+          }
+        },
+        {
+          "key": "target_temperature",
+          "type": "number",
+          "label": {
+            "en": "Target temperature",
+            "fr": "Température de consigne",
+            "de": "Solltemperatur",
+            "es": "Temperatura objetivo"
+          }
+        },
+        {
+          "key": "heater",
+          "type": "boolean",
+          "label": {
+            "en": "Heater on",
+            "fr": "Chauffage allumé",
+            "de": "Heizung an",
+            "es": "Calefacción encendida"
+          }
+        },
+        {
+          "key": "error_code",
+          "type": "string",
+          "label": {
+            "en": "Error code (OK if none)",
+            "fr": "Code d'erreur (OK si aucun)",
+            "de": "Fehlercode (OK wenn keiner)",
+            "es": "Código de error (OK si no hay)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "read_status",
+      "label": {
+        "en": "Read the spa status",
+        "fr": "Lire l'état du spa",
+        "de": "Spa-Status lesen",
+        "es": "Leer el estado del spa"
+      },
+      "description": {
+        "en": "Read the spa now, for the next actions of the scene.",
+        "fr": "Lit le spa maintenant, pour les actions suivantes de la scène.",
+        "de": "Liest das Spa jetzt, für die nächsten Aktionen der Szene.",
+        "es": "Lee el spa ahora, para las siguientes acciones de la escena."
+      },
+      "timeout_seconds": 30,
+      "outputs": [
+        {
+          "key": "water_temperature",
+          "type": "number",
+          "label": {
+            "en": "Water temperature",
+            "fr": "Température de l'eau",
+            "de": "Wassertemperatur",
+            "es": "Temperatura del agua"
+          }
+        },
+        {
+          "key": "target_temperature",
+          "type": "number",
+          "label": {
+            "en": "Target temperature",
+            "fr": "Température de consigne",
+            "de": "Solltemperatur",
+            "es": "Temperatura objetivo"
+          }
+        },
+        {
+          "key": "power",
+          "type": "boolean",
+          "label": {
+            "en": "Spa powered on",
+            "fr": "Spa allumé",
+            "de": "Spa eingeschaltet",
+            "es": "Spa encendido"
+          }
+        },
+        {
+          "key": "heater",
+          "type": "boolean",
+          "label": {
+            "en": "Heater on",
+            "fr": "Chauffage allumé",
+            "de": "Heizung an",
+            "es": "Calefacción encendida"
+          }
+        },
+        {
+          "key": "filter",
+          "type": "boolean",
+          "label": {
+            "en": "Filtration on",
+            "fr": "Filtration allumée",
+            "de": "Filterung an",
+            "es": "Filtración encendida"
+          }
+        },
+        {
+          "key": "bubbles",
+          "type": "boolean",
+          "label": {
+            "en": "Bubbles on",
+            "fr": "Bulles allumées",
+            "de": "Sprudel an",
+            "es": "Burbujas encendidas"
+          }
+        },
+        {
+          "key": "error_code",
+          "type": "string",
+          "label": {
+            "en": "Error code (OK if none)",
+            "fr": "Code d'erreur (OK si aucun)",
+            "de": "Fehlercode (OK wenn keiner)",
+            "es": "Código de error (OK si no hay)"
+          }
+        }
+      ]
+    }
+  ],
+  "widgets": [
+    {
+      "key": "spa",
+      "label": {
+        "en": "Intex spa",
+        "fr": "Spa Intex",
+        "de": "Intex-Spa",
+        "es": "Spa Intex"
+      },
+      "description": {
+        "en": "Water and target temperature, functions, errors, and quick controls.",
+        "fr": "Température de l'eau et consigne, fonctions, erreurs et commandes rapides.",
+        "de": "Wasser- und Solltemperatur, Funktionen, Fehler und Schnellsteuerung.",
+        "es": "Temperatura del agua y objetivo, funciones, errores y controles rápidos."
+      },
+      "icon": "droplet",
+      "action_timeout_seconds": 60
+    }
+  ]
+}
