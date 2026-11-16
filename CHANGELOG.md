@@ -6,6 +6,8 @@ All notable changes to this integration are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.0.3] - 2026-11-16
+
 - Update `@gladysassistant/integration-sdk` to 0.16.1 (security update).
 
 ## [0.0.2] - 2026-11-16
@@ -32,6 +34,7 @@ All notable changes to this integration are documented here. The format follows
 - CI (Prettier, ESLint, tests on Node 22 and 24, store checks, Docker build), multi-arch image
   build, UI-driven Release workflow and GitHub releases.
 
-[Unreleased]: https://github.com/prohand/gladys-intexpurespa/compare/v0.0.2...HEAD
+[Unreleased]: https://github.com/prohand/gladys-intexpurespa/compare/v0.0.3...HEAD
+[0.0.3]: https://github.com/prohand/gladys-intexpurespa/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/prohand/gladys-intexpurespa/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/prohand/gladys-intexpurespa/releases/tag/v0.0.1
